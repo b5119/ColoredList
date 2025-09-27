@@ -1,0 +1,192 @@
+/* Base styles matching Default.html */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff6a00, #ee0979);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Header styles */
+header {
+    background-color: #5bc0de;
+    padding: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.logo {
+    font-weight: bold;
+    font-style: italic;
+    color: #ff3c3c;
+}
+
+.navbar-brand {
+    color: white !important;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 16px;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Authentication container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-card h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.auth-description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Form styles */
+.form-control {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #ff6a00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.25);
+}
+
+.login-submit, .signup-submit {
+    background: linear-gradient(45deg, #ff6a00, #ee0979);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-submit:hover, .signup-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    opacity: 0.9;
+}
+
+/* Auth links */
+.auth-links {
+    margin-top: 20px;
+}
+
+.auth-links p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+.auth-links a {
+    color: #ff6a00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Alert styles */
+.alert {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    .auth-card h2 {
+        font-size: 28px;
+    }
+    
+    .auth-description {
+        font-size: 14px;
+    }
+    
+    header {
+        padding: 15px 10px;
+    }
+    
+    header h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 20px 15px;
+    }
+    
+    .auth-card h2 {
+        font-size: 24px;
+    }
+    
+    .form-control {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    
+    .login-submit, .signup-submit {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}

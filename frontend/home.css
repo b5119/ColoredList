@@ -1,0 +1,147 @@
+/* Use consistent styling with Default.css */
+@import url('Default.css');
+
+/* Override specific styles for home page */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  min-height: 100vh;
+}
+
+/* Home page specific container when user is logged out */
+.homepage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 140px);
+  padding: 20px;
+}
+
+.home-card {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 450px;
+}
+
+.app-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.highlight {
+  color: #ff5722;
+}
+
+.app-description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.button-group {
+  margin: 25px 0;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.login-btn {
+  background: linear-gradient(45deg, #6200ea, #9c27b0);
+  color: white;
+}
+
+.sign-btn {
+  background: linear-gradient(45deg, #ff5722, #f44336);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-decoration: none;
+  color: white;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #888;
+  margin-top: 25px;
+  font-style: italic;
+}
+
+/* When user is logged in, show the main dashboard */
+.dashboard-view {
+  display: none;
+}
+
+.dashboard-view.active {
+  display: block;
+}
+
+.logged-out-view.hidden {
+  display: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .home-card {
+    padding: 30px 20px;
+    margin: 10px;
+  }
+  
+  .app-title {
+    font-size: 28px;
+  }
+  
+  .app-description {
+    font-size: 14px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-card {
+    padding: 20px 15px;
+  }
+  
+  .app-title {
+    font-size: 24px;
+  }
+  
+  .btn {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+   

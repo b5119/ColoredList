@@ -1,0 +1,282 @@
+/* Import consistent styling */
+@import url('Default.css');
+
+/* Settings page specific styles */
+body {
+    background: linear-gradient(to right, #ff6a00, #ee0979);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    background-color: #5bc0de;
+    padding: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.logo {
+    font-weight: bold;
+    font-style: italic;
+    color: #ff3c3c;
+}
+
+.navbar-brand {
+    color: white !important;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 16px;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Settings container */
+.settings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.settings-container h2 {
+    color: white;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Settings sections */
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section h5 {
+    color: white;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Card styling */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.card-body {
+    padding: 25px;
+}
+
+/* Form elements */
+.form-control, .form-select {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #ff6a00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.25);
+}
+
+.form-control:read-only {
+    background-color: #f8f9fa;
+    opacity: 0.8;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Form check elements */
+.form-check {
+    padding: 10px 0;
+}
+
+.form-check-input:checked {
+    background-color: #ff6a00;
+    border-color: #ff6a00;
+}
+
+.form-check-input:focus {
+    border-color: #ff6a00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.25);
+}
+
+.form-check-label {
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+}
+
+/* Button styling */
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+}
+
+.btn-info {
+    background: linear-gradient(45deg, #17a2b8, #138496);
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #ffc107, #e0a800);
+    color: #212529;
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #dc3545, #c82333);
+}
+
+.btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* Statistics styling */
+.stats p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.stats strong {
+    color: #333;
+}
+
+/* Danger zone styling */
+.card.border-danger {
+    border: 2px solid #dc3545 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Status message */
+#statusMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 0 10px;
+    }
+    
+    .card-body {
+        padding: 20px 15px;
+    }
+    
+    .settings-section h5 {
+        font-size: 1.2rem;
+    }
+    
+    .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+    
+    .d-flex.gap-3 {
+        flex-direction: column;
+        gap: 15px !important;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+    
+    #statusMessage {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 20px 10px;
+        min-width: auto;
+    }
+    
+    header {
+        padding: 15px 10px;
+    }
+    
+    header h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-container h2 {
+        font-size: 1.8rem;
+    }
+    
+    .card-body {
+        padding: 15px 10px;
+    }
+    
+    .form-control, .form-select {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

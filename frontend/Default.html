@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colored Lists</title>
+<link rel="stylesheet" href="Default.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+	<header class="navbar">
+	  <div class="container-fluid">
+	    <h1><a class="navbar-brand" href="Default.html"> <span class="logo">Colored</span>Lists</a></h1>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+	      data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" 
+	      aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	        <li class="nav-item"><a class="nav-link active" href="Default.html">Home</a></li>
+	        <li class="nav-item"><a class="nav-link" href="default.html">My Tasks</a></li>
+	        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+	        <li class="nav-item"><a class="nav-link" href="signup.html">Signup</a></li>
+	        <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</header>
+
+	<main class="container my-4">
+		<h2>Welcome to Colored Lists</h2>
+		<p>Organize your lists with colors and reminders!</p>
+
+    <!-- Container for Lists -->
+	 
+    <div id="lists" class="mb-4"></div>
+
+		<div class="task-container" id="taskContainer">
+			<!-- Tasks will be loaded dynamically from DB -->
+		</div>
+
+		<form class="add-task" id="addTaskForm" class="mb-3">
+			<input type="text" id="taskInput" placeholder="New task..." required>
+			<button class="add-btn btn btn-primary" type="submit">Add</button>
+		</form>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="authCheck.js"></script>
+
+	<script>
+	// --- Supabase client ---
+	const SUPABASE_URL = "https://naolniqjndbevsytsnwu.supabase.co";  
+	const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hb2xuaXFqbmRiZXZzeXRzbnd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxOTY5MTUsImV4cCI6MjA3Mjc3MjkxNX0.PhSFQO69hWLMFaaPv3UHAIxhow9k3XDNSIMS_sbmVps";
+	const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+	const taskContainer = document.getElementById("taskContainer");
+	const taskInput = document.getElementById("taskInput");
+	const addTaskForm = document.getElementById("addTaskForm");
+
+	// --- Load tasks ---
+	async function loadTasks() {
+	    const { data, error } = await supabaseClient.from("items").select("*");
+	    if (error) {
+	        console.error("Error loading tasks:", error);
+	        return;
+	    }
+	    taskContainer.innerHTML = "";
+	    data.forEach(item => {
+	        const div = document.createElement("div");
+	        div.classList.add("task", "blue");
+	        div.innerHTML = `
+	            <input type="color" class="color-btn">
+	            <span class="drag">DRAG</span>
+	            <span class="task-text">${item.item_name}</span>
+	            <button class="delete">DELETE</button>
+	        `;
+	        // Delete task
+	        div.querySelector(".delete").addEventListener("click", async () => {
+	            const { error } = await supabaseClient.from("items").delete().eq("item_id", item.item_id);
+	            if (error) console.error(error);
+	            else loadTasks();
+	        });
+	        taskContainer.appendChild(div);
+	    });
+	}
+
+	// Add task
+	addTaskForm.addEventListener("submit", async (e) => {
+	    e.preventDefault();
+	    const taskText = taskInput.value.trim();
+	    if (!taskText) return;
+
+	    const { error } = await supabaseClient.from("items").insert([{ item_name: taskText, list_id: 1 }]);
+	    if (error) alert("Error adding task: " + error.message);
+	    else {
+	        taskInput.value = "";
+	        loadTasks();
+	    }
+	});
+
+	// Load tasks on page load
+	loadTasks();
+	</script>
+
+  <script>
+const listContainer = document.getElementById('lists');
+let lists = [];
+let draggedItem = null;
+
+// Fetch all lists
+async function fetchLists() {
+  const res = await fetch('/lists');
+  lists = await res.json();
+  renderLists();
+}
+
+// Render lists
+function renderLists() {
+  listContainer.innerHTML = '';
+  lists
+    .sort((a,b) => a.position - b.position)
+    .forEach(list => {
+      const div = document.createElement('div');
+      div.className = 'list-item';
+      div.draggable = true;
+      div.dataset.id = list.list_id;
+
+      div.innerHTML = `
+        <span contenteditable="true" class="list-name">${list.name}</span>
+        <button class="delete-btn">Delete</button>
+      `;
+
+      div.querySelector('.delete-btn').addEventListener('click', () => handleDelete(list.list_id));
+      div.querySelector('.list-name').addEventListener('blur', e => handleUpdate(list.list_id, e.target.innerText));
+      div.addEventListener('dragstart', dragStart);
+      div.addEventListener('dragover', dragOver);
+      div.addEventListener('drop', drop);
+
+      listContainer.appendChild(div);
+    });
+}
+
+// Delete list
+async function handleDelete(id) {
+  const res = await fetch(`/lists/${id}`, { method: 'DELETE' });
+  const data = await res.json();
+  console.log(data.message);
+  lists = lists.filter(list => list.list_id !== id);
+  renderLists();
+}
+
+// Update list name
+async function handleUpdate(id, newName) {
+  const res = await fetch(`/lists/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: newName })
+  });
+  const data = await res.json();
+  console.log(data.message);
+  const index = lists.findIndex(l => l.list_id === id);
+  if(index > -1) lists[index].name = newName;
+}
+
+// Drag & Drop
+function dragStart(e) { draggedItem = e.currentTarget; }
+function dragOver(e) { 
+  e.preventDefault(); 
+  const target = e.currentTarget;
+  if(target && target !== draggedItem) {
+    const rect = target.getBoundingClientRect();
+    const next = (e.clientY - rect.top)/rect.height > 0.5;
+    target.parentNode.insertBefore(draggedItem, next && target.nextSibling || target);
+  }
+}
+function drop() {
+  const reordered = Array.from(listContainer.children).map((div, index) => ({
+    list_id: parseInt(div.dataset.id),
+    position: index
+  }));
+  fetch('/lists/reorder', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ reorderedLists: reordered })
+  }).then(res => res.json()).then(d => console.log(d.message));
+}
+
+// Initialize
+fetchLists();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="authCheck.js"></script>
+</body>
+</html>
