@@ -405,16 +405,22 @@
 
 	// Update task color
 	async function updateTaskColor(taskId, color) {
-		// Implementation would go here
-		console.log('Update task color:', taskId, color);
-	}
+    	await fetch(`/items/${taskId}`, {
+        	method: 'PUT',
+        	headers: { 'Content-Type': 'application/json' },
+        	body: JSON.stringify({ color })
+    	});
+	}	
 
 	// Toggle task completion
 	async function toggleTaskComplete(taskId, completed) {
-		// Implementation would go here
-		console.log('Toggle task complete:', taskId, completed);
+    	const res = await fetch(`/items/${taskId}`, {
+        	method: 'PUT',
+        	headers: { 'Content-Type': 'application/json' },
+        	body: JSON.stringify({ completed })
+   	 	});
+    	if (res.ok) fetchTasks(currentListId);
 	}
-
 	// Create new list
 	newListForm.addEventListener('submit', async (e) => {
 		e.preventDefault();

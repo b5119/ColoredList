@@ -234,10 +234,13 @@ app.post("/lists", validateListData, async (req, res) => {
     const { name } = req.body;
     
     // Start with minimal data - just the name
-    const listData = {
-      name: name.trim()
-    };
-    
+  
+     const listData = {
+      name: name.trim(),
+      color: req.body.color || '#5bc0de',
+      category: req.body.category || null,
+      due_date: req.body.due_date || null
+    }; 
     const { data, error } = await supabase
       .from("lists")
       .insert([listData])
@@ -400,6 +403,26 @@ app.delete("/items/:id", async (req, res) => {
     }
     
     res.json({ message: "Item deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.put("/items/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { item_name, color, due_date, completed } = req.body;
+    const updates = {};
+    if (item_name !== undefined) {
+      if (!item_name.trim()) return res.status(400).json({ error: "item_name cannot be empty" });
+      updates.item_name = item_name;
+    }
+    if (color !== undefined) updates.color = color;
+    if (due_date !== undefined) updates.due_date = due_date;
+    if (completed !== undefined) updates.completed = completed;
+    if (Object.keys(updates).length === 0) return res.status(400).json({ error: "No valid fields to update" });
+    const { data, error } = await supabase.from("items").update(updates).eq("item_id", id).select().single();
+    if (error) return res.status(500).json({ error: error.message });
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
